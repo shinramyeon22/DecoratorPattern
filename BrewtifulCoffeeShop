@@ -59,12 +59,12 @@ public class BrewtifulCoffeeShop {
     private static void printOrder(Coffee coffee) {
         System.out.printf("Order: %-60s | Total: ₱%.2f%n", 
                           coffee.getDescription(), coffee.getCost());
-        System.out.println("-".repeat(90));
+        System.out.println("~".repeat(90));
     }
 
     public static void main(String[] args) {
-        System.out.println("Welcome to Brewtiful Coffee Shop!");
-        System.out.println("=".repeat(90));
+        System.out.println("\nWelcome to Brewtiful Coffee Shop!\n");
+        System.out.println(".".repeat(90));
 
         Coffee order1 = new BlackCoffee();
         printOrder(order1);
