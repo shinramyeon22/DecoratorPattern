@@ -1,0 +1,95 @@
+public class BrewtifulCoffeeShop {
+    interface Coffee {
+        String getDescription();
+        double getCost();
+    }
+
+    static class BlackCoffee implements Coffee {
+        public String getDescription() { return "Black Coffee"; }
+        public double getCost() { return 100.00; }
+    }
+
+    static class Espresso implements Coffee {
+        public String getDescription() { return "Espresso"; }
+        public double getCost() { return 130.00; }
+    }
+
+    static abstract class CoffeeDecorator implements Coffee {
+        protected Coffee coffee;
+
+        public CoffeeDecorator(Coffee coffee) {
+            this.coffee = coffee;
+        }
+
+        public String getDescription() { return coffee.getDescription(); }
+        public double getCost() { return coffee.getCost(); }
+    }
+
+    // 4. Concrete Decorators
+    static class Milk extends CoffeeDecorator {
+        public Milk(Coffee coffee) { super(coffee); }
+        public String getDescription() { return coffee.getDescription() + ", Milk"; }
+        public double getCost() { return coffee.getCost() + 25.00; }
+    }
+
+    static class Sugar extends CoffeeDecorator {
+        public Sugar(Coffee coffee) { super(coffee); }
+        public String getDescription() { return coffee.getDescription() + ", Sugar"; }
+        public double getCost() { return coffee.getCost() + 10.00; }
+    }
+
+    static class CaramelSyrup extends CoffeeDecorator {
+        public CaramelSyrup(Coffee coffee) { super(coffee); }
+        public String getDescription() { return coffee.getDescription() + ", Caramel Syrup"; }
+        public double getCost() { return coffee.getCost() + 40.00; }
+    }
+
+    static class WhippedCream extends CoffeeDecorator {
+        public WhippedCream(Coffee coffee) { super(coffee); }
+        public String getDescription() { return coffee.getDescription() + ", Whipped Cream"; }
+        public double getCost() { return coffee.getCost() + 35.00; }
+    }
+
+    static class VanillaSyrup extends CoffeeDecorator {
+        public VanillaSyrup(Coffee coffee) { super(coffee); }
+        public String getDescription() { return coffee.getDescription() + ", Vanilla Syrup"; }
+        public double getCost() { return coffee.getCost() + 45.00; }
+    }
+
+    private static void printOrder(Coffee coffee) {
+        System.out.printf("Order: %-60s | Total: ₱%.2f%n", 
+                          coffee.getDescription(), coffee.getCost());
+        System.out.println("-".repeat(90));
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Welcome to Brewtiful Coffee Shop!");
+        System.out.println("=".repeat(90));
+
+        Coffee order1 = new BlackCoffee();
+        printOrder(order1);
+
+        Coffee order2 = new CaramelSyrup(new Milk(new Espresso()));
+        printOrder(order2);
+
+        Coffee order3 = new VanillaSyrup(
+                            new WhippedCream(
+                                new Sugar(
+                                    new Milk(new BlackCoffee()))));
+        printOrder(order3);
+
+        Coffee order4 = new WhippedCream(
+                            new CaramelSyrup(
+                                new CaramelSyrup(new Espresso())));
+        printOrder(order4);
+
+        Coffee order5 = new Milk(
+                            new Milk(
+                                new Sugar(
+                                    new Sugar(
+                                        new Sugar(new BlackCoffee())))));
+        printOrder(order5);
+
+        System.out.println("Thank you for visiting Brewtiful!");
+    }
+}
